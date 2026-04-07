@@ -1,0 +1,79 @@
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: #05070a;
+    color: #e0e0e0;
+    overflow-x: hidden;
+}
+
+/* Fondo con efecto de estrellas */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                radial-gradient(white, rgba(255,255,255,.1) 1px, transparent 30px);
+    background-size: 550px 550px, 350px 350px;
+    z-index: -1;
+}
+
+header {
+    background: rgba(10, 15, 30, 0.9);
+    padding: 20px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    backdrop-filter: blur(5px);
+    border-bottom: 2px solid #00d4ff;
+    z-index: 100;
+}
+
+nav a {
+    color: #00d4ff;
+    text-decoration: none;
+    margin: 0 15px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+}
+
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.card {
+    background: rgba(20, 30, 50, 0.8);
+    border-radius: 20px;
+    padding: 40px;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    margin-bottom: 50px;
+}
+
+img {
+    width: 100%;
+    border-radius: 15px;
+    margin: 20px 0;
+    filter: brightness(0.8);
+}
+
+h1 { color: #fff; font-size: 2.5rem; }
+h3 { color: #00d4ff; }
+p { font-size: 1.1rem; line-height: 1.8; }
+
+/* Estrellas del mouse */
+.star-trail {
+    position: absolute;
+    width: 3px; height: 3px;
+    background: #00d4ff;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+    to { opacity: 0; transform: scale(4); }
+}
