@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmos | Misión de Supervivencia</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #game-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background: #000;
+            border: 2px solid #00d4ff;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: none; /* Escondemos el cursor para usar la nave */
+        }
+        #gameCanvas { display: block; background: #05070a; }
+        #score {
+            position: absolute;
+            top: 10px; left: 10px;
+            color: #00d4ff;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .game-overlay {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background: rgba(0,0,0,0.8);
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+        }
+        .btn-play {
+            background: #00d4ff;
+            border: none;
+            padding: 10px 20px;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="planetas.html">Planetas</a>
+            <a href="galaxias.html">Galaxias</a>
+            <a href="astronautas.html">Astronautas</a>
+            <a href="curiosidades.html">Curiosidades</a>
+            <a href="juego.html" class="active">¡Jugar!</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="card">
+            <h1>Misión: Cinturón de Asteroides</h1>
+            <p>Mueve tu nave con el ratón para esquivar los restos espaciales. ¡Cada segundo cuenta!</p>
+            
+            <div id="game-container">
+                <canvas id="gameCanvas"></canvas>
+                <div id="score">Puntos: 0</div>
+                <div id="game-over" class="game-overlay">
+                    <h2 style="color: #ff4d4d;">¡MISIÓN FALLIDA!</h2>
+                    <p id="final-score"></p>
+                    <button class="btn-play" onclick="resetGame()">Reintentar</button>
+                </div>
+                <div id="start-screen" class="game-overlay" style="display: block;">
+                    <h2>¿Listo para el despegue?</h2>
+                    <button class="btn-play" onclick="startGame()">Iniciar Misión</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="game.js"></script> <script src="script.js"></script> </body>
+</html>
