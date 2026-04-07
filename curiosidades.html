@@ -1,26 +1,34 @@
-<!doctype html>
-<html>
-<head><title>Curiosidades</title></head>
-<body style="background:black;color:white;text-align:center">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmos - Curiosidades</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="planetas.html">Planetas</a>
+            <a href="galaxias.html">Galaxias</a>
+            <a href="astronautas.html">Astronautas</a>
+            <a href="curiosidades.html">Curiosidades</a>
+        </nav>
+    </header>
 
-<nav>
-<a onclick="ir('inicio')">Inicio</a>
-<a onclick="ir('solar')">Sistema Solar</a>
-<a onclick="ir('juego')">Juego</a>
-<a onclick="ir('panel')">Panel</a>
-</nav>
-  
-<h1>🌟 Curiosidades</h1>
+    <main class="container">
+        <section class="card">
+            <h1>Datos Asombrosos</h1>
+            <ul>
+                <li><strong>Días largos:</strong> Un día en Venus es más largo que un año en Venus.</li>
+                <li><strong>Silencio:</strong> El espacio es completamente silencioso porque no hay aire para transmitir ondas sonoras.</li>
+                <li><strong>Diamantes:</strong> En Neptuno y Urano, llueven diamantes debido a la presión extrema sobre el carbono.</li>
+            </ul>
+            <img src="https://images.unsplash.com/photo-1464802686167-b939a6910659" alt="Nebulosa Distante">
+        </section>
+    </main>
 
-<img src="universo.jpg" width="400">
-
-<ul>
-<li>El universo tiene más de 13 mil millones de años</li>
-<li>Hay miles de millones de galaxias</li>
-<li>La luz del sol tarda 8 minutos en llegar a la Tierra</li>
-</ul>
-
-<iframe width="400" src="https://www.youtube.com/embed/7ATtD8xwGzA"></iframe>
-
+    <script src="script.js"></script>
 </body>
 </html>
