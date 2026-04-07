@@ -6,17 +6,10 @@
 <title>Universo PRO</title>
 
 <style>
-body{
-    margin:0;
-    font-family:Arial;
-    background:black;
-    color:white;
-}
+body{margin:0;font-family:Arial;background:black;color:white}
 
-/* NAV (igual en TODAS las páginas) */
+/* NAV */
 nav{
-    position:sticky;
-    top:0;
     background:#000;
     padding:15px;
     text-align:center;
@@ -25,7 +18,7 @@ nav a{
     color:#00ffd5;
     margin:10px;
     text-decoration:none;
-    font-weight:bold;
+    cursor:pointer;
 }
 nav a:hover{ text-shadow:0 0 10px #00ffd5 }
 
@@ -33,42 +26,42 @@ nav a:hover{ text-shadow:0 0 10px #00ffd5 }
 .section{display:none;padding:20px;text-align:center}
 .active{display:block}
 
-/* BOTON */
-button{
-    padding:10px;
-    border:none;
-    border-radius:10px;
-    background:#00ffd5;
-    cursor:pointer;
+/* LOGIN */
+#login{
+    text-align:center;
+    margin-top:100px;
 }
 
 /* PLANETAS */
 .planeta{
-    display:inline-block;
+    width:120px;
     margin:10px;
-    padding:20px;
-    border-radius:50%;
-    background:#222;
     cursor:pointer;
+    border:3px solid #00ffd5;
+    border-radius:50%;
 }
-.planeta:hover{
-    background:#00ffd5;
-    color:black;
-}
+.planeta:hover{ transform:scale(1.1) }
 
 /* JUEGO */
-#player{
-    width:50px;height:50px;
-    background:#00ffd5;
+#game{
+    width:300px;
+    height:200px;
+    border:2px solid #00ffd5;
+    margin:auto;
     position:relative;
+    overflow:hidden;
 }
-
-/* CARD */
-.card{
-    background:#111;
-    padding:15px;
-    margin:10px;
-    border-radius:10px;
+#player{
+    width:30px;height:30px;
+    background:#00ffd5;
+    position:absolute;
+    bottom:0;
+}
+#enemy{
+    width:30px;height:30px;
+    background:red;
+    position:absolute;
+    top:0;
 }
 </style>
 </head>
@@ -77,54 +70,68 @@ button{
 
 <nav>
 <a onclick="ir('inicio')">Inicio</a>
-<a onclick="ir('solar')">Sistema Solar</a>
-<a onclick="ir('juego')">Juego</a>
-<a onclick="ir('panel')">Panel</a>
+<a onclick="checkLogin('solar')">Sistema Solar</a>
+<a onclick="checkLogin('juego')">Juego</a>
+<a href="astronautas.html">Astronautas</a>
+<a href="misiones.html">Misiones</a>
 </nav>
 
 <!-- LOGIN -->
 <div id="login" class="section active">
-<h2>🔐 Login</h2>
-<input id="user" placeholder="Usuario"><br><br>
+<h2>🔐 Ingresa tu nombre</h2>
+<input id="user">
+<br><br>
 <button onclick="login()">Entrar</button>
 </div>
 
 <!-- INICIO -->
 <div id="inicio" class="section">
 <h1>🌌 Universo PRO</h1>
-<p>Bienvenido</p>
+<p id="bienvenida"></p>
 </div>
 
 <!-- 🌍 SISTEMA SOLAR -->
 <div id="solar" class="section">
 <h2>🌍 Sistema Solar</h2>
 
-<div class="planeta" onclick="info('Mercurio')">Mercurio</div>
-<div class="planeta" onclick="info('Venus')">Venus</div>
-<div class="planeta" onclick="info('Tierra')">Tierra</div>
-<div class="planeta" onclick="info('Marte')">Marte</div>
+<img src="mercurio.jpg" class="planeta" onclick="mostrar('Mercurio: planeta más cercano al sol')">
+<img src="venus.jpg" class="planeta" onclick="mostrar('Venus: el planeta más caliente')">
+<img src="tierra.jpg" class="planeta" onclick="mostrar('Tierra: nuestro hogar')">
+<img src="marte.jpg" class="planeta" onclick="mostrar('Marte: planeta rojo')">
 
 <p id="info"></p>
 </div>
 
 <!-- 🎮 JUEGO -->
 <div id="juego" class="section">
-<h2>🎮 Juego Espacial</h2>
-<p>Mueve con flechas ⬅️➡️</p>
+<h2>🎮 Esquiva el enemigo</h2>
+<p>Puntaje: <span id="score">0</span></p>
+
+<div id="game">
 <div id="player"></div>
+<div id="enemy"></div>
 </div>
-
-<!-- 📊 PANEL -->
-<div id="panel" class="section">
-<h2>📊 Panel</h2>
-
-<input id="dato" placeholder="Agregar dato">
-<button onclick="guardar()">Guardar</button>
-
-<div id="lista"></div>
 </div>
 
 <script>
+
+// LOGIN
+function login(){
+    let u = user.value;
+    if(u=="") return alert("Escribe tu nombre");
+    localStorage.setItem("user", u);
+    bienvenida.innerText = "Bienvenido " + u;
+    ir("inicio");
+}
+
+// BLOQUEAR SIN LOGIN
+function checkLogin(seccion){
+    if(!localStorage.getItem("user")){
+        alert("Debes iniciar sesión");
+        return;
+    }
+    ir(seccion);
+}
 
 // NAVEGACIÓN
 function ir(id){
@@ -132,45 +139,45 @@ function ir(id){
     document.getElementById(id).classList.add('active');
 }
 
-// LOGIN LOCAL
-function login(){
-    let u = document.getElementById("user").value;
-    localStorage.setItem("user", u);
-    ir("inicio");
-}
-
 // SISTEMA SOLAR
-function info(p){
-    document.getElementById("info").innerText = "Información de " + p;
+function mostrar(texto){
+    document.getElementById("info").innerText = texto;
 }
 
 // JUEGO
-let pos = 0;
+let player = document.getElementById("player");
+let enemy = document.getElementById("enemy");
+let pos = 130;
+let enemyY = 0;
+let score = 0;
+
 document.addEventListener("keydown", e=>{
-    if(e.key=="ArrowRight") pos+=10;
-    if(e.key=="ArrowLeft") pos-=10;
-    document.getElementById("player").style.left = pos+"px";
+    if(e.key=="ArrowLeft") pos-=20;
+    if(e.key=="ArrowRight") pos+=20;
+    player.style.left = pos+"px";
 });
 
-// PANEL
-function guardar(){
-    let d = document.getElementById("dato").value;
-    let datos = JSON.parse(localStorage.getItem("datos")) || [];
-    datos.push(d);
-    localStorage.setItem("datos", JSON.stringify(datos));
-    mostrar();
-}
+setInterval(()=>{
+    enemyY += 5;
+    enemy.style.top = enemyY+"px";
 
-function mostrar(){
-    let datos = JSON.parse(localStorage.getItem("datos")) || [];
-    let html="";
-    datos.forEach(d=>{
-        html += "<div class='card'>"+d+"</div>";
-    });
-    document.getElementById("lista").innerHTML = html;
-}
+    if(enemyY > 170){
+        enemyY = 0;
+        enemy.style.left = Math.random()*260+"px";
+        score++;
+        document.getElementById("score").innerText = score;
+    }
 
-mostrar();
+    // colisión
+    let px = player.offsetLeft;
+    let ex = enemy.offsetLeft;
+
+    if(enemyY > 140 && Math.abs(px-ex)<30){
+        alert("💀 Perdiste | Puntaje: "+score);
+        location.reload();
+    }
+
+},50);
 
 </script>
 
