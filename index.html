@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Universo Extremo</title>
+<title>Universo PRO</title>
 
 <style>
 body{
@@ -11,157 +11,168 @@ body{
     font-family:Arial;
     background:black;
     color:white;
-    overflow-x:hidden;
-    cursor: crosshair;
 }
 
-/* 🌌 ESTRELLAS */
-.stars,.stars2,.stars3{
-    position:fixed;width:100%;height:100%;z-index:-1;
-}
-.stars{background:url('https://www.transparenttextures.com/patterns/stardust.png');animation:move 100s linear infinite}
-.stars2{animation:move 200s linear infinite;opacity:.5}
-.stars3{animation:move 300s linear infinite;opacity:.2}
-
-@keyframes move{
-    from{transform:translateY(0)}
-    to{transform:translateY(-2000px)}
-}
-
-/* 🌠 ESTRELLA FUGAZ */
-.shoot{
-    position:absolute;
-    width:2px;height:100px;
-    background:linear-gradient(white,transparent);
-    animation:shoot 6s infinite;
-}
-@keyframes shoot{
-    0%{transform:translate(0,0) rotate(45deg);opacity:1}
-    100%{transform:translate(800px,600px) rotate(45deg);opacity:0}
-}
-
-/* NAV */
+/* NAV (igual en TODAS las páginas) */
 nav{
-    position:sticky;top:0;
-    background:rgba(0,0,0,.7);
-    backdrop-filter:blur(10px);
-    padding:15px;text-align:center;
+    position:sticky;
+    top:0;
+    background:#000;
+    padding:15px;
+    text-align:center;
 }
 nav a{
-    color:#00ffd5;margin:10px;
-    text-decoration:none;font-weight:bold;
+    color:#00ffd5;
+    margin:10px;
+    text-decoration:none;
+    font-weight:bold;
 }
 nav a:hover{ text-shadow:0 0 10px #00ffd5 }
 
-/* TITULO */
-h1{
-    text-align:center;
-    font-size:60px;
-    text-shadow:0 0 25px #00ffd5;
+/* SECCIONES */
+.section{display:none;padding:20px;text-align:center}
+.active{display:block}
+
+/* BOTON */
+button{
+    padding:10px;
+    border:none;
+    border-radius:10px;
+    background:#00ffd5;
+    cursor:pointer;
+}
+
+/* PLANETAS */
+.planeta{
+    display:inline-block;
+    margin:10px;
+    padding:20px;
+    border-radius:50%;
+    background:#222;
+    cursor:pointer;
+}
+.planeta:hover{
+    background:#00ffd5;
+    color:black;
+}
+
+/* JUEGO */
+#player{
+    width:50px;height:50px;
+    background:#00ffd5;
+    position:relative;
 }
 
 /* CARD */
 .card{
-    background:rgba(255,255,255,.05);
-    border-radius:20px;
-    padding:20px;
-    margin:20px auto;
-    width:80%;
-    backdrop-filter:blur(10px);
-    box-shadow:0 0 20px #00ffd5;
-}
-
-/* MEDIA */
-.media{
-    width:80%;max-width:600px;
-    border-radius:20px;
-    border:4px solid #00ffd5;
-    box-shadow:0 0 30px #00ffd5;
-    margin:20px auto;
-    display:block;
-    transition:.4s;
-}
-.media:hover{
-    transform:scale(1.08);
-    box-shadow:0 0 60px #00ffd5;
-}
-
-/* 🪐 PLANETAS FLOTANDO */
-.planeta{
-    position:absolute;
-    width:100px;height:100px;
-    border-radius:50%;
-    background:url('planetas.jpg') center/cover;
-    animation:flotar 20s infinite linear;
-    box-shadow:0 0 30px #00ffd5;
-}
-
-@keyframes flotar{
-    0%{top:10%;left:-10%}
-    50%{top:60%;left:80%}
-    100%{top:10%;left:-10%}
-}
-
-/* BOTON */
-.btn{
-    display:inline-block;
-    background:#00ffd5;
+    background:#111;
     padding:15px;
+    margin:10px;
     border-radius:10px;
-    color:black;
-    text-decoration:none;
-    font-weight:bold;
-}
-
-/* 📱 RESPONSIVE */
-@media(max-width:600px){
-    h1{font-size:35px}
-    .media{width:95%}
 }
 </style>
 </head>
 
 <body>
 
-<!-- FONDO -->
-<div class="stars"></div>
-<div class="stars2"></div>
-<div class="stars3"></div>
-
-<!-- EFECTOS -->
-<div class="shoot"></div>
-<div class="planeta"></div>
-
 <nav>
-<a href="index.html">Inicio</a>
-<a href="planetas.html">Planetas</a>
-<a href="galaxias.html">Galaxias</a>
-<a href="misiones.html">Misiones</a>
-<a href="astronautas.html">Astronautas</a>
-<a href="curiosidades.html">Curiosidades</a>
+<a onclick="ir('inicio')">Inicio</a>
+<a onclick="ir('solar')">Sistema Solar</a>
+<a onclick="ir('juego')">Juego</a>
+<a onclick="ir('panel')">Panel</a>
 </nav>
 
-<h1>🌌 Universo Extremo</h1>
-
-<div class="card">
-<p>
-Explora el universo con una experiencia interactiva avanzada:
-animaciones, efectos visuales y contenido dinámico como nunca antes.
-</p>
+<!-- LOGIN -->
+<div id="login" class="section active">
+<h2>🔐 Login</h2>
+<input id="user" placeholder="Usuario"><br><br>
+<button onclick="login()">Entrar</button>
 </div>
 
-<img src="espacio.jpg" class="media">
-
-<div class="card">
-<h2>🚀 Viaje por el universo</h2>
-<iframe class="media"
-src="https://www.youtube.com/embed/1w8Z0UOXVaY"
-allowfullscreen></iframe>
+<!-- INICIO -->
+<div id="inicio" class="section">
+<h1>🌌 Universo PRO</h1>
+<p>Bienvenido</p>
 </div>
 
-<center>
-<a class="btn" href="planetas.html">Comenzar Exploración</a>
-</center>
+<!-- 🌍 SISTEMA SOLAR -->
+<div id="solar" class="section">
+<h2>🌍 Sistema Solar</h2>
+
+<div class="planeta" onclick="info('Mercurio')">Mercurio</div>
+<div class="planeta" onclick="info('Venus')">Venus</div>
+<div class="planeta" onclick="info('Tierra')">Tierra</div>
+<div class="planeta" onclick="info('Marte')">Marte</div>
+
+<p id="info"></p>
+</div>
+
+<!-- 🎮 JUEGO -->
+<div id="juego" class="section">
+<h2>🎮 Juego Espacial</h2>
+<p>Mueve con flechas ⬅️➡️</p>
+<div id="player"></div>
+</div>
+
+<!-- 📊 PANEL -->
+<div id="panel" class="section">
+<h2>📊 Panel</h2>
+
+<input id="dato" placeholder="Agregar dato">
+<button onclick="guardar()">Guardar</button>
+
+<div id="lista"></div>
+</div>
+
+<script>
+
+// NAVEGACIÓN
+function ir(id){
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+
+// LOGIN LOCAL
+function login(){
+    let u = document.getElementById("user").value;
+    localStorage.setItem("user", u);
+    ir("inicio");
+}
+
+// SISTEMA SOLAR
+function info(p){
+    document.getElementById("info").innerText = "Información de " + p;
+}
+
+// JUEGO
+let pos = 0;
+document.addEventListener("keydown", e=>{
+    if(e.key=="ArrowRight") pos+=10;
+    if(e.key=="ArrowLeft") pos-=10;
+    document.getElementById("player").style.left = pos+"px";
+});
+
+// PANEL
+function guardar(){
+    let d = document.getElementById("dato").value;
+    let datos = JSON.parse(localStorage.getItem("datos")) || [];
+    datos.push(d);
+    localStorage.setItem("datos", JSON.stringify(datos));
+    mostrar();
+}
+
+function mostrar(){
+    let datos = JSON.parse(localStorage.getItem("datos")) || [];
+    let html="";
+    datos.forEach(d=>{
+        html += "<div class='card'>"+d+"</div>";
+    });
+    document.getElementById("lista").innerHTML = html;
+}
+
+mostrar();
+
+</script>
 
 </body>
 </html>
