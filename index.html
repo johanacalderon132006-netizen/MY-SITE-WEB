@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Componentes de una Red Informática</title>
+
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    margin: 0;
+    padding: 40px 20px;
+    color: #fff;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Imágenes superiores */
+.header-images {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.header-images img {
+    width: 120px;
+    border-radius: 20px;
+}
+
+/* Título */
+.main-title {
+    text-align: center;
+    margin: 30px 0;
+}
+
+/* Contenido */
+.content-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.text-content {
+    flex: 1;
+}
+
+.item {
+    background: white;
+    color: black;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+/* Imagen grande */
+.image-side {
+    flex: 1;
+}
+
+.image-side img {
+    width: 100%;
+    border-radius: 20px;
+}
+
+/* Formulario */
+.formulario {
+    max-width: 900px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+input, button {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin: 5px;
+}
+
+button {
+    background: #23d5ab;
+    cursor: pointer;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    margin-top: 40px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header-images">
+    <img src="imagenes/escudo.jpeg">
+    <img src="imagenes/uefab.jpeg">
+</div>
+
+<h1 class="main-title">🌐 Componentes de una Red</h1>
+
+<div class="content-section">
+    
+    <div class="text-content" id="lista"></div>
+
+    <div class="image-side">
+        <img src="imagenes/com.jpg">
+    </div>
+
+</div>
+
+<div class="formulario">
+    <h3>Agregar nuevo componente</h3>
+    <input type="text" id="titulo" placeholder="Nombre">
+    <input type="text" id="descripcion" placeholder="Descripción">
+    <button onclick="agregar()">Agregar</button>
+</div>
+
+<div class="footer">
+    🚀 Los componentes de una red permiten que el mundo esté conectado.
+</div>
+
+<script>
+// Datos iniciales
+let componentes = JSON.parse(localStorage.getItem("componentes")) || [
+    {titulo: "🌐 Router", descripcion: "Conecta diferentes redes"},
+    {titulo: "🔌 Switch", descripcion: "Une dispositivos en red"},
+    {titulo: "🧵 Cable", descripcion: "Transporta datos físicamente"},
+    {titulo: "🆔 Tarjeta de red", descripcion: "Permite conexión del equipo"},
+    {titulo: "🖥️ Servidor", descripcion: "Gestiona recursos"}
+];
+
+// Mostrar datos
+function mostrar() {
+    let lista = document.getElementById("lista");
+    lista.innerHTML = "";
+
+    componentes.forEach((c, i) => {
+        lista.innerHTML += `
+        <div class="item">
+            <strong>${c.titulo}</strong><br>
+            ${c.descripcion}<br>
+            <button onclick="eliminar(${i})">Eliminar</button>
+        </div>`;
+    });
+
+    localStorage.setItem("componentes", JSON.stringify(componentes));
+}
+
+// Agregar
+function agregar() {
+    let t = document.getElementById("titulo").value;
+    let d = document.getElementById("descripcion").value;
+
+    if (t && d) {
+        componentes.push({titulo: t, descripcion: d});
+        mostrar();
+    }
+}
+
+// Eliminar
+function eliminar(i) {
+    componentes.splice(i, 1);
+    mostrar();
+}
+
+// Inicializar
+mostrar();
+</script>
+
+</body>
+</html>
