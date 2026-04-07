@@ -2,191 +2,51 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Red PRO App</title>
+<title>Universo NASA PRO</title>
 
 <style>
-body {
-    margin:0;
-    font-family: Arial;
-    background: linear-gradient(135deg,#1f1c2c,#928dab);
-    color:white;
-}
-
-/* NAV */
-nav {
-    display:flex;
-    justify-content:space-between;
-    padding:15px;
-    background:rgba(0,0,0,0.6);
-}
-
-nav button {
-    background:none;
-    border:none;
-    color:white;
-    cursor:pointer;
-}
-
-/* SECCIONES */
-.section { display:none; padding:20px; }
-.active { display:block; }
-
-/* CARDS */
-.card {
-    background:white;
-    color:black;
-    padding:15px;
-    margin:10px;
-    border-radius:10px;
-}
-
-/* GRID */
-.grid {
-    display:flex;
-    flex-wrap:wrap;
-}
-
-/* INPUT */
-input {
-    padding:10px;
-    margin:5px;
-    border-radius:10px;
-    border:none;
-}
-
-button {
-    padding:10px;
-    border:none;
-    border-radius:10px;
-    background:#00ffd5;
-    cursor:pointer;
-}
+body{margin:0;font-family:Arial;background:black;color:white;overflow-x:hidden}
+.stars,.stars2,.stars3{position:fixed;width:100%;height:100%;z-index:-1}
+.stars{background:url('https://www.transparenttextures.com/patterns/stardust.png');animation:move 100s linear infinite}
+.stars2{background:url('https://www.transparenttextures.com/patterns/stardust.png');animation:move 200s linear infinite;opacity:.5}
+.stars3{background:url('https://www.transparenttextures.com/patterns/stardust.png');animation:move 300s linear infinite;opacity:.2}
+@keyframes move{from{transform:translateY(0)}to{transform:translateY(-2000px)}}
+nav{background:rgba(0,0,0,.7);padding:15px;text-align:center}
+nav a{color:#00ffd5;margin:10px;text-decoration:none;font-weight:bold}
+h1{text-align:center;font-size:60px;text-shadow:0 0 20px #00ffd5}
+.card{background:rgba(255,255,255,.05);padding:20px;margin:20px auto;width:80%;border-radius:20px;box-shadow:0 0 20px #00ffd5}
+.media{width:80%;max-width:600px;border-radius:20px;border:4px solid #00ffd5;box-shadow:0 0 30px #00ffd5;margin:20px auto;display:block}
+.planeta{width:150px;height:150px;border-radius:50%;background:url('planetas.jpg') center/cover;margin:auto;animation:girar 10s linear infinite}
+@keyframes girar{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 </style>
 </head>
 
 <body>
 
+<div class="stars"></div><div class="stars2"></div><div class="stars3"></div>
+
 <nav>
-    <div>
-        <button onclick="ir('inicio')">Inicio</button>
-        <button onclick="ir('componentes')">Componentes</button>
-    </div>
-    <div>
-        <span id="user"></span>
-        <button onclick="logout()">Salir</button>
-    </div>
+<a href="index.html">Inicio</a>
+<a href="planetas.html">Planetas</a>
+<a href="galaxias.html">Galaxias</a>
+<a href="misiones.html">Misiones</a>
+<a href="astronautas.html">Astronautas</a>
+<a href="curiosidades.html">Curiosidades</a>
 </nav>
 
-<!-- LOGIN -->
-<div id="login" class="section active">
-    <h2>Login</h2>
-    <input id="email" placeholder="Correo">
-    <input id="pass" type="password" placeholder="Contraseña">
-    <br>
-    <button onclick="login()">Entrar</button>
-    <button onclick="register()">Registrarse</button>
+<h1>🌌 Universo Interactivo</h1>
+
+<div class="card">
+<p>Explora el universo con efectos visuales avanzados y contenido interactivo.</p>
 </div>
 
-<!-- INICIO -->
-<div id="inicio" class="section">
-    <h1>🌐 Red Informática PRO</h1>
-    <img src="escudo.jpeg" width="100">
-    <img src="uefab.jpeg" width="100">
+<div class="planeta"></div>
+
+<img src="espacio.jpg" class="media">
+
+<div class="card">
+<iframe class="media" src="https://www.youtube.com/embed/1w8Z0UOXVaY"></iframe>
 </div>
-
-<!-- COMPONENTES -->
-<div id="componentes" class="section">
-    <h2>Componentes</h2>
-
-    <div id="lista" class="grid"></div>
-
-    <input id="t" placeholder="Nombre">
-    <input id="d" placeholder="Descripción">
-    <button onclick="agregar()">Agregar</button>
-</div>
-
-<!-- FIREBASE -->
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } 
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import { getFirestore, collection, addDoc, onSnapshot } 
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-// 🔴🔴🔴 AQUÍ PEGAS TU CONFIG 🔴🔴🔴
-const firebaseConfig = {
-  apiKey: "AIzaSyDWaHVyIPohbRLVTCfh7TS6-KRKrdihArc",
-  authDomain: "red-pro-app.firebaseapp.com",
-  projectId: "red-pro-app",
-  storageBucket: "red-pro-app.firebasestorage.app",
-  messagingSenderId: "20774388138",
-  appId: "1:20774388138:web:492a29492955e4fc916bd3",
-  measurementId: "G-1ZG0BHD69Y"
-};
-
-
-// INICIALIZAR
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-
-// NAVEGACIÓN
-window.ir = (id)=>{
-    document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
-    document.getElementById(id).classList.add("active");
-};
-
-// LOGIN
-window.register = async ()=>{
-    await createUserWithEmailAndPassword(auth, email.value, pass.value);
-};
-
-window.login = async ()=>{
-    await signInWithEmailAndPassword(auth, email.value, pass.value);
-};
-
-window.logout = ()=>{
-    signOut(auth);
-};
-
-
-// SESIÓN
-onAuthStateChanged(auth, user=>{
-    if(user){
-        user.innerHTML = user.email;
-        ir('inicio');
-        cargar();
-    }else{
-        ir('login');
-    }
-});
-
-
-// BASE DE DATOS
-function cargar(){
-    onSnapshot(collection(db,"componentes"), snap=>{
-        let html="";
-        snap.forEach(doc=>{
-            let d = doc.data();
-            html += `<div class="card"><b>${d.t}</b><br>${d.d}</div>`;
-        });
-        lista.innerHTML = html;
-    });
-}
-
-window.agregar = async ()=>{
-    await addDoc(collection(db,"componentes"), {
-        t: t.value,
-        d: d.value
-    });
-};
-
-</script>
 
 </body>
 </html>
