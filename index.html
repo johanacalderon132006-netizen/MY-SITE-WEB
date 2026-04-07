@@ -2,191 +2,190 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<title>Red Informática Pro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Red PRO App</title>
 
 <style>
 body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #1f1c2c, #928dab);
-    color: white;
+    margin:0;
+    font-family: Arial;
+    background: linear-gradient(135deg,#1f1c2c,#928dab);
+    color:white;
 }
 
-/* NAVBAR */
+/* NAV */
 nav {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    background: rgba(0,0,0,0.5);
-    padding: 15px;
+    display:flex;
+    justify-content:space-between;
+    padding:15px;
+    background:rgba(0,0,0,0.6);
 }
 
 nav button {
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-nav button:hover {
-    color: #00ffd5;
+    background:none;
+    border:none;
+    color:white;
+    cursor:pointer;
 }
 
 /* SECCIONES */
-.section {
-    display: none;
-    padding: 30px;
-    animation: fade 0.5s ease;
-}
+.section { display:none; padding:20px; }
+.active { display:block; }
 
-.active {
-    display: block;
-}
-
-@keyframes fade {
-    from {opacity: 0;}
-    to {opacity: 1;}
-}
-
-/* HEADER */
-.header {
-    text-align: center;
-}
-
-.header img {
-    width: 100px;
-    margin: 10px;
-}
-
-/* TARJETAS */
+/* CARDS */
 .card {
-    background: white;
-    color: black;
-    padding: 15px;
-    margin: 10px;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    transition: transform 0.3s;
-}
-
-.card:hover {
-    transform: scale(1.05);
+    background:white;
+    color:black;
+    padding:15px;
+    margin:10px;
+    border-radius:10px;
 }
 
 /* GRID */
 .grid {
-    display: flex;
-    flex-wrap: wrap;
+    display:flex;
+    flex-wrap:wrap;
 }
 
-/* FORM */
-input, button {
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
-    margin: 5px;
+/* INPUT */
+input {
+    padding:10px;
+    margin:5px;
+    border-radius:10px;
+    border:none;
 }
 
 button {
-    background: #00ffd5;
-    cursor: pointer;
+    padding:10px;
+    border:none;
+    border-radius:10px;
+    background:#00ffd5;
+    cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<!-- MENÚ -->
 <nav>
-    <button onclick="mostrarSeccion('inicio')">Inicio</button>
-    <button onclick="mostrarSeccion('componentes')">Componentes</button>
-    <button onclick="mostrarSeccion('info')">Información</button>
+    <div>
+        <button onclick="ir('inicio')">Inicio</button>
+        <button onclick="ir('componentes')">Componentes</button>
+    </div>
+    <div>
+        <span id="user"></span>
+        <button onclick="logout()">Salir</button>
+    </div>
 </nav>
 
+<!-- LOGIN -->
+<div id="login" class="section active">
+    <h2>Login</h2>
+    <input id="email" placeholder="Correo">
+    <input id="pass" type="password" placeholder="Contraseña">
+    <br>
+    <button onclick="login()">Entrar</button>
+    <button onclick="register()">Registrarse</button>
+</div>
+
 <!-- INICIO -->
-<div id="inicio" class="section active">
-    <div class="header">
-        <img src="escudo.jpeg">
-        <img src="uefab.jpeg">
-        <h1>🌐 Red Informática</h1>
-        <p>Explora el mundo de las redes de manera interactiva</p>
-    </div>
+<div id="inicio" class="section">
+    <h1>🌐 Red Informática PRO</h1>
+    <img src="escudo.jpeg" width="100">
+    <img src="uefab.jpeg" width="100">
 </div>
 
 <!-- COMPONENTES -->
 <div id="componentes" class="section">
+    <h2>Componentes</h2>
 
-    <h2>Componentes de Red</h2>
+    <div id="lista" class="grid"></div>
 
-    <div class="grid" id="lista"></div>
-
-    <h3>Agregar componente</h3>
-    <input type="text" id="titulo" placeholder="Nombre">
-    <input type="text" id="descripcion" placeholder="Descripción">
+    <input id="t" placeholder="Nombre">
+    <input id="d" placeholder="Descripción">
     <button onclick="agregar()">Agregar</button>
-
 </div>
 
-<!-- INFO -->
-<div id="info" class="section">
-    <h2>¿Qué es una red informática?</h2>
-    <p>
-    Una red informática es un conjunto de dispositivos conectados entre sí 
-    que comparten información y recursos. Permite comunicación rápida, acceso a internet 
-    y transferencia de datos en tiempo real.
-    </p>
+<!-- FIREBASE -->
+<script type="module">
 
-    <img src="com.jpg" style="width:100%; border-radius:20px;">
-</div>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-<script>
+import { getFirestore, collection, addDoc, onSnapshot } 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+// 🔴🔴🔴 AQUÍ PEGAS TU CONFIG 🔴🔴🔴
+const firebaseConfig = {
+  apiKey: "AIzaSyDWaHVyIPohbRLVTCfh7TS6-KRKrdihArc",
+  authDomain: "red-pro-app.firebaseapp.com",
+  projectId: "red-pro-app",
+  storageBucket: "red-pro-app.firebasestorage.app",
+  messagingSenderId: "20774388138",
+  appId: "1:20774388138:web:492a29492955e4fc916bd3",
+  measurementId: "G-1ZG0BHD69Y"
+};
+
+
+// INICIALIZAR
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+
 // NAVEGACIÓN
-function mostrarSeccion(id) {
-    document.querySelectorAll(".section").forEach(sec => {
-        sec.classList.remove("active");
-    });
+window.ir = (id)=>{
+    document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
     document.getElementById(id).classList.add("active");
-}
+};
 
-// DATOS
-let componentes = JSON.parse(localStorage.getItem("componentes")) || [
-    {titulo: "🌐 Router", descripcion: "Conecta redes"},
-    {titulo: "🔌 Switch", descripcion: "Conecta dispositivos"},
-    {titulo: "🧵 Cable", descripcion: "Transporta datos"},
-    {titulo: "🆔 Tarjeta", descripcion: "Permite conexión"},
-    {titulo: "🖥️ Servidor", descripcion: "Gestiona recursos"}
-];
+// LOGIN
+window.register = async ()=>{
+    await createUserWithEmailAndPassword(auth, email.value, pass.value);
+};
 
-// MOSTRAR
-function mostrar() {
-    let lista = document.getElementById("lista");
-    lista.innerHTML = "";
+window.login = async ()=>{
+    await signInWithEmailAndPassword(auth, email.value, pass.value);
+};
 
-    componentes.forEach(c => {
-        lista.innerHTML += `
-        <div class="card">
-            <strong>${c.titulo}</strong><br>
-            ${c.descripcion}
-        </div>`;
-    });
+window.logout = ()=>{
+    signOut(auth);
+};
 
-    localStorage.setItem("componentes", JSON.stringify(componentes));
-}
 
-// AGREGAR
-function agregar() {
-    let t = document.getElementById("titulo").value;
-    let d = document.getElementById("descripcion").value;
-
-    if (t && d) {
-        componentes.push({titulo: t, descripcion: d});
-        mostrar();
+// SESIÓN
+onAuthStateChanged(auth, user=>{
+    if(user){
+        user.innerHTML = user.email;
+        ir('inicio');
+        cargar();
+    }else{
+        ir('login');
     }
+});
+
+
+// BASE DE DATOS
+function cargar(){
+    onSnapshot(collection(db,"componentes"), snap=>{
+        let html="";
+        snap.forEach(doc=>{
+            let d = doc.data();
+            html += `<div class="card"><b>${d.t}</b><br>${d.d}</div>`;
+        });
+        lista.innerHTML = html;
+    });
 }
 
-// INICIO
-mostrar();
+window.agregar = async ()=>{
+    await addDoc(collection(db,"componentes"), {
+        t: t.value,
+        d: d.value
+    });
+};
+
 </script>
 
 </body>
