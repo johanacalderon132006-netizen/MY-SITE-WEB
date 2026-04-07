@@ -3,31 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cosmos | Curiosidades Extrañas</title>
+    <title>Cosmos | Datos Fascinantes</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-      <nav>
-    <a href="index.html">Inicio</a>
-    <a href="planetas.html">Planetas</a>
-    <a href="galaxias.html">Galaxias</a>
-    <a href="astronautas.html">Astronautas</a>
-    <a href="curiosidades.html">Curiosidades</a>
-    <a href="juego.html">¡Jugar!</a> 
-      </nav>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="planetas.html">Planetas</a>
+            <a href="galaxias.html">Galaxias</a>
+            <a href="astronautas.html">Astronautas</a>
+            <a href="curiosidades.html" class="active">Curiosidades</a>
+            <a href="juego.html">¡Jugar!</a>
+        </nav>
     </header>
 
     <main class="container">
         <section class="card">
-            <h1>Hechos que parecen ciencia ficción</h1>
-            <ul>
-                <li><strong>Relatividad del Tiempo:</strong> Según Einstein, cuanto más rápido te mueves, más lento pasa el tiempo para ti. Un reloj en el espacio va más lento que uno en la Tierra.</li>
-                <li><strong>Espaguetización:</strong> Si cayeras en un agujero negro, la gravedad en tus pies sería mucho más fuerte que en tu cabeza, estirándote como un fideo.</li>
-                <li><strong>El color del Universo:</strong> Los científicos determinaron que si mezclaras toda la luz del universo, el color resultante sería un beige pálido llamado "Café Cósmico".</li>
-            </ul>
+            <h1>Curiosidades del Espacio Exterior</h1>
+            
+            <div class="info-grid">
+                <h3>Sobre el Sistema Solar</h3>
+                <ul>
+                    <li><strong>Olor del espacio:</strong> Los astronautas describen el olor del espacio como una mezcla de carne asada, metal caliente y humo de soldadura.</li>
+                    <li><strong>El Gran Cañón de Marte:</strong> El Valles Marineris en Marte es 10 veces más largo y 5 veces más profundo que el Gran Cañón de la Tierra.</li>
+                    <li><strong>Plutón:</strong> Es tan pequeño que incluso la Luna de la Tierra es más grande que él.</li>
+                </ul>
+
+                <h3>Sobre la Física Cósmica</h3>
+                <ul>
+                    <li><strong>Soldadura en frío:</strong> Si dos piezas del mismo metal se tocan en el vacío del espacio, se pegarán permanentemente de forma automática.</li>
+                    <li><strong>Estrellas de Neutrones:</strong> Una sola cucharadita de una estrella de neutrones pesaría 6,000 millones de toneladas.</li>
+                    <li><strong>Luz "vieja":</strong> La luz que vemos de las estrellas más lejanas tardó millones de años en llegar; básicamente estamos mirando el pasado.</li>
+                </ul>
+
+                <h3>Sobre Galaxias y Energía</h3>
+                <ul>
+                    <li><strong>Galaxias Caníbales:</strong> Las galaxias grandes a menudo "se comen" a las pequeñas para seguir creciendo.</li>
+                    <li><strong>Año Galáctico:</strong> El Sol tarda 225 millones de años en dar una sola vuelta completa alrededor del centro de nuestra galaxia.</li>
+                </ul>
+            </div>
+
+            <hr style="border: 1px solid rgba(0,212,255,0.2); margin: 30px 0;">
+            
+            <h3>Documental: El Tamaño del Universo</h3>
+            <p>Este video explica visualmente la escala increíble de todo lo que hemos mencionado anteriormente:</p>
+            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                <iframe 
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 10px;"
+                    src="https://www.youtube.com/embed/i93Z7zljQ7I" 
+                    title="Escala del Universo" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
         </section>
     </main>
+
     <script src="script.js"></script>
 </body>
 </html>
