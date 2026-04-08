@@ -130,3 +130,12 @@ img {
     border-radius: 10px;
     border: 1px solid #00d4ff;
 }
+// Rastro de estrellas al mover el mouse
+document.addEventListener('mousemove', (e) => {
+    const star = document.createElement('div');
+    star.className = 'star-trail';
+    star.style.left = e.pageX + 'px';
+    star.style.top = e.pageY + 'px';
+    document.body.appendChild(star);
+    setTimeout(() => star.remove(), 800);
+});
