@@ -124,7 +124,7 @@ function draw() {
     if (bullet.state === "fire") ctx.drawImage(bulletImg, bullet.x, bullet.y, bullet.width, bullet.height);
 
     ctx.fillStyle = "white";
-    ctx.font = "20px RAVIE.TTF";
+    ctx.font = "20px ALGERIAN";
     ctx.fillText(`SCORE: ${score}`, 20, 30);
     ctx.fillText("Alex Calderón", canvas.width - 280, 30);
 
@@ -132,10 +132,10 @@ function draw() {
         ctx.fillStyle = "rgba(0,0,0,0.8)";
         ctx.fillRect(0,0,canvas.width, canvas.height);
         ctx.fillStyle = "#00d4ff";
-        ctx.font = "50px RAVIE.TTF";
+        ctx.font = "50px ALGERIAN";
         ctx.textAlign = "center";
         ctx.fillText("GAME OVER", canvas.width/2, canvas.height/2);
-        ctx.font = "20px RAVIE.TTF";
+        ctx.font = "20px ALGERIAN";
         ctx.fillText("Presiona 'R' para reiniciar", canvas.width/2, canvas.height/2 + 50);
         ctx.textAlign = "left";
     }
