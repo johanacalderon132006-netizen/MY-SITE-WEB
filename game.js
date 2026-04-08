@@ -124,18 +124,18 @@ function draw() {
     if (bullet.state === "fire") ctx.drawImage(bulletImg, bullet.x, bullet.y, bullet.width, bullet.height);
 
     ctx.fillStyle = "white";
-    ctx.font = "20px Arial";
+    ctx.font = "20px RAVIE.TTF";
     ctx.fillText(`SCORE: ${score}`, 20, 30);
-    ctx.fillText("Alex Calderón - 2do Informática", canvas.width - 280, 30);
+    ctx.fillText("Alex Calderón", canvas.width - 280, 30);
 
     if (gameOver) {
         ctx.fillStyle = "rgba(0,0,0,0.8)";
         ctx.fillRect(0,0,canvas.width, canvas.height);
         ctx.fillStyle = "#00d4ff";
-        ctx.font = "50px Arial";
+        ctx.font = "50px RAVIE.TTF";
         ctx.textAlign = "center";
         ctx.fillText("GAME OVER", canvas.width/2, canvas.height/2);
-        ctx.font = "20px Arial";
+        ctx.font = "20px RAVIE.TTF";
         ctx.fillText("Presiona 'R' para reiniciar", canvas.width/2, canvas.height/2 + 50);
         ctx.textAlign = "left";
     }
