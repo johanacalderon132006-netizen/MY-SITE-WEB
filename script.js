@@ -27,24 +27,25 @@ document.addEventListener('mousemove', (e) => {
         star.remove();
     }, 800);
 });
-// --- CONTADOR DE VISITAS GLOBAL ---
-function updateVisitCount() {
-    // Usamos la API gratuita de countapi.xyz
-    // Nota: Sustituye 'alex-calderon-space-invader' por un nombre único para tu proyecto
-    const namespace = 'alex-calderon-informatica';
-    const key = 'visitas';
+// --- CONTADOR DE VISITAS ---
+const contadorElemento = document.getElementById('count');
 
-    fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
-        .then(res => res.json())
-        .then(res => {
-            document.getElementById('count').innerText = res.value;
-        })
-        .catch(err => {
-            console.log("Error al cargar contador:", err);
-            // Si la API falla, usamos un contador local para que no se vea vacío
-            document.getElementById('count').innerText = "1";
-        });
+async function obtenerVisitas() {
+    try {
+        // Sustituye 'tu_nombre_unico' por algo personalizado, ej: 'alex-space-invader-2026'
+        const nombreProyecto = 'alex-calderon-informatica-v1';
+        
+        // Esta URL crea el contador automáticamente la primera vez que entras
+        const respuesta = await fetch(`https://api.countapi.xyz/hit/${nombreProyecto}/visitas`);
+        const datos = await respuesta.json();
+        
+        // Ponemos el número en el HTML
+        contadorElemento.innerText = datos.value;
+    } catch (error) {
+        console.log("Error con la API, usando contador de respaldo");
+        // Si la API falla, usamos un número fijo o local para que no se vea feo
+        contadorElemento.innerText = "1";
+    }
 }
 
-// Ejecutar al cargar la página
-updateVisitCount();
+obtenerVisitas();
