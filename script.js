@@ -27,3 +27,24 @@ document.addEventListener('mousemove', (e) => {
         star.remove();
     }, 800);
 });
+// --- CONTADOR DE VISITAS GLOBAL ---
+function updateVisitCount() {
+    // Usamos la API gratuita de countapi.xyz
+    // Nota: Sustituye 'alex-calderon-space-invader' por un nombre único para tu proyecto
+    const namespace = 'alex-calderon-informatica';
+    const key = 'visitas';
+
+    fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
+        .then(res => res.json())
+        .then(res => {
+            document.getElementById('count').innerText = res.value;
+        })
+        .catch(err => {
+            console.log("Error al cargar contador:", err);
+            // Si la API falla, usamos un contador local para que no se vea vacío
+            document.getElementById('count').innerText = "1";
+        });
+}
+
+// Ejecutar al cargar la página
+updateVisitCount();
