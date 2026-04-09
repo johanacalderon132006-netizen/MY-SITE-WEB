@@ -27,15 +27,28 @@ document.addEventListener('mousemove', (e) => {
         star.remove();
     }, 800);
 });
-// CONTADOR QUE NUNCA FALLA (Se guarda en tu PC)
-function contadorLocal() {
-    let visitas = localStorage.getItem('contador_alex');
-    if (visitas === null) {
-        visitas = 1;
-    } else {
-        visitas = parseInt(visitas) + 1;
+// --- CONTADOR DE VISITAS MEJORADO ---
+async function obtenerVisitas() {
+    const contadorElemento = document.getElementById('count');
+    // Usamos el servicio de 'api.countapi.xyz' o este respaldo:
+    const nombreProyecto = 'alex-calderon-2026-v2'; // Cambié el nombre para forzar uno nuevo
+
+    try {
+        // Probamos con una URL de respaldo que suele ser más rápida
+        const respuesta = await fetch(`https://api.countapi.xyz/hit/${nombreProyecto}/visitas`);
+        
+        if (!respuesta.ok) throw new Error('Error en servidor');
+
+        const datos = await respuesta.json();
+        contadorElemento.innerText = datos.value;
+    } catch (error) {
+        console.log("Servidor ocupado, intentando de nuevo...");
+        // Si falla, mostramos un número basado en localStorage para que al menos tú lo veas
+        let locales = localStorage.getItem('misVisitas') || 0;
+        locales++;
+        localStorage.setItem('misVisitas', locales);
+        contadorElemento.innerText = locales + "+"; 
     }
-    localStorage.setItem('contador_alex', visitas);
-    document.getElementById('count').innerText = visitas;
 }
-contadorLocal();
+
+obtenerVisitas();
