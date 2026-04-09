@@ -94,7 +94,26 @@ img {
     border: 1px solid rgba(255,255,255,0.1);
 }
 
-/* 4. EFECTOS DEL CURSOR (JavaScript) */
+/* --- NUEVO: ESTILO PARA LAS MISIONES --- */
+.mision {
+    margin-top: 30px;
+}
+
+.mision img {
+    height: 350px;
+    object-fit: cover; /* Mantiene la proporción sin deformar */
+    border: 2px solid #00d4ff;
+}
+
+.divisor {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #00d4ff, transparent);
+    margin: 40px 0;
+    opacity: 0.3;
+}
+
+/* 4. EFECTOS DEL CURSOR */
 .star-trail {
     position: absolute;
     width: 4px; height: 4px;
@@ -110,16 +129,17 @@ img {
     to { opacity: 0; transform: scale(5); }
 }
 
-/* 5. EL JUEGO (Lo que me pediste añadir) */
+/* 5. EL JUEGO */
 #gameCanvas {
     display: block;
     width: 100%;
     height: 500px;
-    /* Tu código aquí: */
     background: radial-gradient(circle, #0a0f1e 0%, #000 100%);
     box-shadow: inset 0 0 50px rgba(0, 212, 255, 0.2);
     border-radius: 10px;
 }
+
+/* 6. CONTADOR DE VISITAS */
 #visit-counter {
     position: fixed;
     bottom: 20px;
