@@ -27,25 +27,15 @@ document.addEventListener('mousemove', (e) => {
         star.remove();
     }, 800);
 });
-// --- CONTADOR DE VISITAS ---
-const contadorElemento = document.getElementById('count');
-
-async function obtenerVisitas() {
-    try {
-        // Sustituye 'tu_nombre_unico' por algo personalizado, ej: 'alex-space-invader-2026'
-        const nombreProyecto = 'alex-calderon-informatica-v1';
-        
-        // Esta URL crea el contador automáticamente la primera vez que entras
-        const respuesta = await fetch(`https://api.countapi.xyz/hit/${nombreProyecto}/visitas`);
-        const datos = await respuesta.json();
-        
-        // Ponemos el número en el HTML
-        contadorElemento.innerText = datos.value;
-    } catch (error) {
-        console.log("Error con la API, usando contador de respaldo");
-        // Si la API falla, usamos un número fijo o local para que no se vea feo
-        contadorElemento.innerText = "1";
+// CONTADOR QUE NUNCA FALLA (Se guarda en tu PC)
+function contadorLocal() {
+    let visitas = localStorage.getItem('contador_alex');
+    if (visitas === null) {
+        visitas = 1;
+    } else {
+        visitas = parseInt(visitas) + 1;
     }
+    localStorage.setItem('contador_alex', visitas);
+    document.getElementById('count').innerText = visitas;
 }
-
-obtenerVisitas();
+contadorLocal();
